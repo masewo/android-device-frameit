@@ -11,6 +11,7 @@ def main():
     Path("input").mkdir(parents=True, exist_ok=True)
     Path("output").mkdir(parents=True, exist_ok=True)
     for device in devices:
+        Path("output\\" + device).mkdir(parents=True, exist_ok=True)
         for entry in os.scandir('input'):
             if entry.path.endswith(".png") and entry.is_file():
                 frame(device, entry.name)
@@ -76,7 +77,7 @@ def frame(device, path):
     new_image.paste(back, (0, 0), back)
     new_image.paste(masked_screenshot, (offset_x, offset_y), masked_screenshot)
 
-    new_image.save("output\\" + device + "_" + path, "PNG")
+    new_image.save("output\\" + device + "\\" + path, "PNG")
 
 
 def read_layout(device):
