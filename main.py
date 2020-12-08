@@ -7,7 +7,7 @@ android_home = os.getenv("ANDROID_HOME")
 
 
 def main():
-    devices = ['pixel_4_xl', 'pixel_c', 'nexus_7_2013']
+    devices = ['pixel_4_xl', 'pixel_c', 'nexus_7_2013', 'ipad_pro']
     Path("input").mkdir(parents=True, exist_ok=True)
     Path("output").mkdir(parents=True, exist_ok=True)
     for device in devices:
@@ -45,7 +45,7 @@ def frame(device, path):
     offset_x = int(part2.group(1))
     offset_y = int(part2.group(2))
 
-    back = Image.open(os.path.join(android_home, "skins", device, image))
+    back = Image.open(os.path.join(get_skin_folder(device), image))
     back_size = back.size
 
     screenshot = Image.open('input\\' + path)
@@ -65,7 +65,7 @@ def frame(device, path):
 
     mask = ""
     if mask_path:
-        mask = Image.open(os.path.join(android_home, "skins", device, mask_path))
+        mask = Image.open(os.path.join(get_skin_folder(device), mask_path))
 
     if mask:
         masked_screenshot = Image.alpha_composite(screenshot, mask)
@@ -81,8 +81,16 @@ def frame(device, path):
 
 
 def read_layout(device):
-    layout = open(os.path.join(android_home, "skins", device, "layout")).read()
+    layout = open(os.path.join(get_skin_folder(device), "layout")).read()
     return layout
+
+
+def get_skin_folder(device):
+    path = os.path.join(android_home, "skins", device)
+    if os.path.exists(path):
+        return path
+    else:
+        return os.path.join("skins", device)
 
 
 if __name__ == '__main__':

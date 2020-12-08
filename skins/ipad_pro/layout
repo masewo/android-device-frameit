@@ -1,0 +1,53 @@
+parts {
+  device {
+    display {
+      width 2048
+      height 2732
+      x 0
+      y 0
+    }
+  }
+  portrait {
+    background {
+      image port_back.png
+    }
+  }
+  landscape {
+    background {
+      image land_back.png
+    }
+  }
+}
+layouts {
+  portrait {
+    width 9999
+    height 9999
+    event EV_SW:0:1
+    part1 {
+      name portrait
+      x 0
+      y 0
+    }
+    part2 {
+      name device
+      x 999
+      y 999
+    }
+  }
+  landscape {
+    width 2914
+    height 2233
+    event EV_SW:0:0
+    part1 {
+      name landscape
+      x 0
+      y 0
+    }
+    part2 {
+      name device
+      x 93
+      y 2142
+      rotation 3
+    }
+  }
+}
