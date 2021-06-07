@@ -4,12 +4,12 @@ from PIL import Image
 from pathlib import Path
 
 android_home = os.getenv("ANDROID_HOME")
+devices = ['pixel_4_xl', 'pixel_c', 'nexus_7_2013', 'ipad_pro', 'iphone_12_pro']
 
 
 def main():
-    devices = ['pixel_4_xl', 'pixel_c', 'nexus_7_2013', 'ipad_pro']
-    Path("input").mkdir(parents=True, exist_ok=True)
-    Path("output").mkdir(parents=True, exist_ok=True)
+    init()
+
     for device in devices:
         Path("output\\" + device).mkdir(parents=True, exist_ok=True)
         for entry in os.scandir('input'):
@@ -17,8 +17,14 @@ def main():
                 frame(device, entry.name)
 
 
+def init():
+    Path("input").mkdir(parents=True, exist_ok=True)
+    Path("output").mkdir(parents=True, exist_ok=True)
+
+
 def frame(device, path):
     layout = read_layout(device)
+
     display = re.compile(r"display {.*?width (\d{3,4}).*?height (\d{3,4})", re.DOTALL).search(layout)
     display_width = display.group(1)
     display_height = display.group(2)
@@ -73,7 +79,6 @@ def frame(device, path):
         masked_screenshot = screenshot
 
     new_image = Image.new('RGBA', (back_size[0], back_size[1]), (255, 0, 0, 0))
-
     new_image.paste(back, (0, 0), back)
     new_image.paste(masked_screenshot, (offset_x, offset_y), masked_screenshot)
 

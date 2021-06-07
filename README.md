@@ -11,6 +11,7 @@ https://developer.apple.com/app-store/marketing/guidelines/#section-products
 3. Scale images down to (width x height):
    
 - Tablet 12.9 inch Landscape: 2914 x 2233
+- Phone Pro Vertical: 1314 x 2656
 
 4. Move images to skins folders
 
